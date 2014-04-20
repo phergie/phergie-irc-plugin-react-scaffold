@@ -1,0 +1,25 @@
+{
+    "name": "{{composer_name}}",
+    "description": "Phergie plugin for {{purpose}}",
+    "keywords": [ "irc", "bot", "react", "plugin" ],
+    "license": "BSD-2-Clause",
+    "support": {
+        "email": "team@phergie.org",
+        "irc": "irc://irc.freenode.net/phergie",
+        "issues": "{{github_url}}/issues",
+        "source": "{{github_url}}"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "phergie/phergie-irc-bot-react": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*",
+        "phake/phake": "1.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "{{composer_namespace}}\\": "src"
+        }
+    }
+}

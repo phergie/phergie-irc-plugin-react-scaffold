@@ -1,0 +1,44 @@
+# {{composer_name}}
+
+[Phergie](http://github.com/phergie/phergie-irc-bot-react/) phergie for {{purpose}}....
+
+[![Build Status](https://secure.travis-ci.org/{{composer_name}}.png?branch=master)](http://travis-ci.org/{{composer_name}})
+
+## Install
+
+The recommended method of installation is [through composer](http://getcomposer.org).
+
+```JSON
+{
+    "require": {
+        "{{composer_name}}": "dev-master"
+    }
+}
+```
+
+See Phergie documentation for more information on installing plugins.
+
+## Configuration
+
+```php
+new \{{namespace}}\Plugin(array(
+
+
+
+))
+```
+
+## Tests
+
+To run the unit test suite:
+
+```
+curl -s https://getcomposer.org/installer | php
+php composer.phar install
+cd tests
+../vendor/bin/phpunit
+```
+
+## License
+
+Released under the BSD License. See `LICENSE`.
