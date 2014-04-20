@@ -2,8 +2,6 @@
 
 Utility used to generate files for [Phergie](http://github.com/phergie/phergie-irc-bot-react/) plugins.
 
-[![Build Status](https://secure.travis-ci.org/phergie/phergie-irc-plugin-react-scaffold.png?branch=master)](http://travis-ci.org/phergie/phergie-irc-plugin-react-scaffold)
-
 ## Install
 
 Simply clone or download this repository and run the install command of [composer](http://getcomposer.org) from the repository root.
