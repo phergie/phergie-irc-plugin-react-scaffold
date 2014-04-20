@@ -61,6 +61,7 @@ class ScaffoldCommand extends Command
             && $this->generateLicenseFile($output)
             && $this->generateReadmeFile($output)
             && $this->generateComposerFile($output)
+            && $this->generateGitIgnoreFile($output)
             && $this->runComposerInstall($output))) {
             $output->writeln('<error>' . $this->error . '</error>');
         }
@@ -199,6 +200,16 @@ class ScaffoldCommand extends Command
             'composer.json.twig',
             'composer.json',
             'composer',
+            $output
+        );
+    }
+
+    protected function generateGitIgnoreFile(OutputInterface $output)
+    {
+        return $this->generateFile(
+            '.gitignore.twig',
+            '.gitignore',
+            '.gitignore',
             $output
         );
     }
