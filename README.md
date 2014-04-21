@@ -31,6 +31,7 @@ Created Travis CI file phergie-irc-plugin-react-quit/.travis.yml
 Created license file phergie-irc-plugin-react-quit/LICENSE
 Created README file phergie-irc-plugin-react-quit/README.md
 Created composer file phergie-irc-plugin-react-quit/composer.json
+Created .gitignore file phergie-irc-plugin-react-quit/.gitignore
 Installing composer dependencies in plugin directory phergie-irc-plugin-react-quit
 [snip]
 Done
