@@ -250,7 +250,7 @@ class ScaffoldCommand extends Command
     protected function getTwig()
     {
         $loader = new \Twig_Loader_Filesystem($this->templatePath);
-        $twig = new \Twig_Environment($loader);
+        $twig = new \Twig_Environment($loader, array('autoescape' => false));
         return $twig;
     }
 
