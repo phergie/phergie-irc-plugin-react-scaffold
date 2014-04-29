@@ -223,7 +223,13 @@ class ScaffoldCommand extends Command
 
         $output->writeln('<info>Installing composer dependencies in plugin directory ' . $repo . '</info>');
         chdir($repo);
-        $install = new Process('php ' . $this->parameters['composer'] . ' install -o');
+        $install = new Process(
+            'php ' . $this->parameters['composer'] . ' install -o',
+            null,
+            null,
+            null,
+            120
+        );
         $install->run(function($type, $buffer) {
             $dst = $type === Process::ERR ? STDERR : STDOUT;
             fwrite($dst, $buffer);
