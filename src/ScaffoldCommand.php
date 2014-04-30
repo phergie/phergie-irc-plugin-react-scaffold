@@ -88,6 +88,11 @@ class ScaffoldCommand extends Command
         $this->parameters['testsuite_dir'] = './' . substr($namespace, 0, strpos($namespace, '\\')) . '/';
         $this->parameters['composer_namespace'] = addslashes($namespace);
 
+        $this->parameters['command_plugin'] = $command = $dialog->ask($output, 'Command plugin (y/n, default n): ', 'n') === 'y';
+        $this->parameters['event_class_full'] = 'Phergie\\Irc\\' . ($command ? 'Plugin\React\Command\CommandEvent' : 'Event\EventInterface');
+        $this->parameters['event_class_short'] = ltrim(strrchr($this->parameters['event_class_full'], '\\'), '\\');
+        $this->parameters['handler_method'] = 'handle' . ($command ? 'Command' : 'Event');
+
         $default = '~/bin/composer.phar';
         $this->parameters['composer'] = $dialog->ask($output, 'Command to run composer (default ' . $default . '): ', $default);
 

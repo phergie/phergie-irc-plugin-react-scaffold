@@ -12,7 +12,7 @@ namespace {{namespace}};
 
 use Phergie\Irc\Bot\React\AbstractPlugin;
 use Phergie\Irc\Bot\React\EventQueueInterface;
-use Phergie\Irc\Event\EventInterface;
+use {{event_class_full}};
 
 /**
  * Plugin for {{purpose}}.
@@ -44,9 +44,17 @@ class Plugin extends AbstractPlugin
     public function getSubscribedEvents()
     {
         return array(
-
+            '{% if command_plugin %}command{% else %}irc{% endif %}.' => '{{handler_method}}',
         );
     }
 
-    
+    /**
+     *
+     *
+     * @param \{{event_class_full}} $event
+     * @param \Phergie\Irc\Bot\React\EventQueueInterface $queue
+     */
+    public function {{handler_method}}({{event_class_short}} $event, EventQueueInterface $queue)
+    {
+    }
 }

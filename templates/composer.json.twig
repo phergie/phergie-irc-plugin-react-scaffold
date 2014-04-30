@@ -11,12 +11,19 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "phergie/phergie-irc-bot-react": "dev-master"
+        "phergie/phergie-irc-bot-react": "dev-master"{% if command_plugin %},
+        "phergie/phergie-irc-plugin-react-command": "dev-master"
+{% endif %}
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*",
         "phake/phake": "1.0.*"
     },
+{% if command_plugin %}
+    "suggest": {
+        "phergie/phergie-irc-plugin-react-commandhelp": "provides interactive help for commands"
+    },
+{% endif %}
     "autoload": {
         "psr-4": {
             "{{composer_namespace}}\\": "src"
