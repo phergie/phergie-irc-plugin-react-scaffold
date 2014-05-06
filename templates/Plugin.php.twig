@@ -11,8 +11,8 @@
 namespace {{namespace}};
 
 use Phergie\Irc\Bot\React\AbstractPlugin;
-use Phergie\Irc\Bot\React\EventQueueInterface;
-use {{event_class_full}};
+use Phergie\Irc\Bot\React\EventQueueInterface as Queue;
+use {{event_class_full}} as Event;
 
 /**
  * Plugin for {{purpose}}.
@@ -54,7 +54,7 @@ class Plugin extends AbstractPlugin
      * @param \{{event_class_full}} $event
      * @param \Phergie\Irc\Bot\React\EventQueueInterface $queue
      */
-    public function {{handler_method}}({{event_class_short}} $event, EventQueueInterface $queue)
+    public function {{handler_method}}(Event $event, Queue $queue)
     {
     }
 }
