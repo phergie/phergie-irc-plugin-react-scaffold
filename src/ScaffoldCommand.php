@@ -11,6 +11,7 @@
 namespace Phergie\Irc\Plugin\React\Scaffold;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
@@ -44,62 +45,168 @@ class ScaffoldCommand extends Command
      */
     protected $templatePath;
 
+    /**
+     * Associative array keyed by setting name of setting values that can be
+     * overridden via a configuration file
+     *
+     * @var array
+     */
+    protected $defaultSettings;
+
+    /**
+     * Input interface in use
+     *
+     * @var \Symfony\Component\Console\Input\InputInterface
+     */
+    protected $input;
+
+    /**
+     * Output interface in use
+     *
+     * @var \Symfony\Component\Console\Output\OutputInterface
+     */
+    protected $output;
+
     public function __construct()
     {
         parent::__construct();
         $this->templatePath = __DIR__ . '/../templates';
+        $this->defaultSettings = array(
+            'base_composer_name' => 'phergie/phergie-irc-plugin-react-',
+            'base_namespace' => 'Phergie\\Irc\\Plugin\\React\\',
+            'standard_event_class' => 'Phergie\\Irc\\Event\\EventInterface',
+            'command_event_class' => 'Phergie\\Irc\\Plugin\\React\\Command\\CommandEvent',
+            'standard_handler_method' => 'handleEvent',
+            'command_handler_method' => 'handleCommand',
+            'composer_command' => 'php ~/bin/composer.phar',
+            'command_plugin' => 'n',
+            'base_repo_url' => 'https://github.com/',
+            'copyright_years' => date('Y'),
+            'author_name' => 'Phergie Development Team',
+            'author_email' => 'team@phergie.org',
+            'author_url' => 'http://phergie.org',
+            'license_name' => 'New BSD License',
+            'license_url' => 'http://phergie.org/license',
+            'license_value' => 'BSD-2-Clause',
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getInput($output);
-        if (!($this->createDirectories($output)
-            && $this->generatePluginFile($output)
-            && $this->generateTestFile($output)
-            && $this->generatePHPUnitFile($output)
-            && $this->generateTravisFile($output)
-            && $this->generateLicenseFile($output)
-            && $this->generateReadmeFile($output)
-            && $this->generateComposerFile($output)
-            && $this->generateGitIgnoreFile($output)
-            && $this->runComposerInstall($output))) {
+        $this->input = $input;
+        $this->output = $output;
+
+        $this->getInput();
+
+        if (!($this->createDirectories()
+            && $this->generatePluginFile()
+            && $this->generateTestFile()
+            && $this->generatePHPUnitFile()
+            && $this->generateTravisFile()
+            && $this->generateLicenseFile()
+            && $this->generateReadmeFile()
+            && $this->generateComposerFile()
+            && $this->generateGitIgnoreFile()
+            && $this->runComposerInstall())) {
             $output->writeln('<error>' . $this->error . '</error>');
         }
     }
 
-    protected function getInput(OutputInterface $output)
+    protected function getInput()
     {
-        $dialog = $this->getHelperSet()->get('dialog');
+        $defaultSettings = array_merge(
+            $this->defaultSettings,
+            $this->getDefaultSettingsFromFile()
+        );
 
-        $this->parameters['short_name'] = $dialog->ask($output, 'Short plugin name: ');
+        $this->askForSetting($defaultSettings, 'short_name', 'Short plugin name');
+        $this->askForSetting($defaultSettings, 'purpose', 'Plugin purpose');
+        $this->askForSetting($defaultSettings, 'plugin_url', 'Plugin URL');
+        $this->askForSetting($defaultSettings, 'author_name', 'Author name');
+        $this->askForSetting($defaultSettings, 'author_email', 'Author e-mail address');
+        $this->askForSetting($defaultSettings, 'author_url', 'Author URL');
+        $this->askForSetting($defaultSettings, 'license_name', 'License name');
+        $this->askForSetting($defaultSettings, 'license_url', 'License URL');
+        $this->askForSetting($defaultSettings, 'license_value', 'Composer license value');
+        $this->askForSetting($defaultSettings, 'copyright_years', 'Copyright years');
 
-        $this->parameters['purpose'] = $dialog->ask($output, 'Plugin purpose: ');
+        $defaultSettings['composer_name'] = $defaultSettings['base_composer_name'] . strtolower($this->parameters['short_name']);
+        $this->askForSetting($defaultSettings, 'composer_name', 'composer.json name attribute');
 
-        $default = 'phergie/phergie-irc-plugin-react-' . strtolower($this->parameters['short_name']);
-        $this->parameters['composer_name'] = $dialog->ask($output, 'composer.json name attribute (default ' . $default . '): ', $default);
+        $defaultSettings['repo_url'] = $defaultSettings['base_repo_url'] . $this->parameters['composer_name'];
+        $this->askForSetting($defaultSettings, 'repo_url', 'Repo URL');
+        $this->parameters['repo_name'] = substr(strrchr($this->parameters['repo_url'], '/'), 1);
 
-        $default = 'https://github.com/' . $this->parameters['composer_name'];
-        $this->parameters['github_url'] = $dialog->ask($output, 'GitHub URL (default ' . $default . '): ', $default);
-        $this->parameters['github_repo'] = substr(strrchr($this->parameters['github_url'], '/'), 1);
+        $this->askForSetting($defaultSettings, 'issues_url', 'Issues URL');
 
-        $default = 'Phergie\\Irc\\Plugin\\React\\' . ucfirst($this->parameters['short_name']);
-        $this->parameters['namespace'] = $namespace = $dialog->ask($output, 'PHP namespace (default ' . $default . '): ', $default);
-        $this->parameters['plugin_test_dir'] = 'tests/' . str_replace('\\', DIRECTORY_SEPARATOR, $namespace);
-        $this->parameters['testsuite_dir'] = './' . substr($namespace, 0, strpos($namespace, '\\')) . '/';
-        $this->parameters['composer_namespace'] = addslashes($namespace);
+        $defaultSettings['package_namespace'] = $defaultSettings['base_namespace'] . ucfirst($this->parameters['short_name']);
+        $this->askForSetting($defaultSettings, 'package_namespace', 'PHP namespace');
+        $packageNamespace = $this->parameters['package_namespace'];
+        $this->parameters['vendor_namespace'] = substr($packageNamespace, 0, strpos($packageNamespace, '\\'));
+        $this->parameters['plugin_test_dir'] = 'tests/' . str_replace('\\', DIRECTORY_SEPARATOR, $packageNamespace);
+        $this->parameters['testsuite_dir'] = './' . substr($packageNamespace, 0, strpos($packageNamespace, '\\')) . '/';
+        $this->parameters['composer_namespace'] = addslashes($packageNamespace);
 
-        $this->parameters['command_plugin'] = $command = $dialog->ask($output, 'Command plugin (y/n, default n): ', 'n') === 'y';
-        $this->parameters['event_class_full'] = 'Phergie\\Irc\\' . ($command ? 'Plugin\React\Command\CommandEvent' : 'Event\EventInterface');
+        $default = $defaultSettings['command_plugin'];
+        $this->parameters['command_plugin'] = $command = $this->getDialogHelper()->askConfirmation($this->output,
+            'Command plugin (y/n, default ' . $default . '): ', $default === 'y');
+        $this->parameters['event_class_full'] = $defaultSettings[($command ? 'command' : 'standard') . '_event_class'];
         $this->parameters['event_class_short'] = ltrim(strrchr($this->parameters['event_class_full'], '\\'), '\\');
-        $this->parameters['handler_method'] = 'handle' . ($command ? 'Command' : 'Event');
+        $this->parameters['handler_method'] = $defaultSettings[($command ? 'command' : 'standard') . '_handler_method'];
 
-        $default = '~/bin/composer.phar';
-        $this->parameters['composer'] = $dialog->ask($output, 'Command to run composer (default ' . $default . '): ', $default);
+        $this->askForSetting($defaultSettings, 'composer_command', 'Command to run composer');
 
         return true;
     }
 
-    protected function createDirectories(OutputInterface $output)
+    protected function getDialogHelper()
+    {
+        return $this->getHelperSet()->get('dialog');
+    }
+
+    protected function askForSetting($defaultSettings, $parameter, $label, $description = null)
+    {
+        $default = isset($defaultSettings[$parameter]) ? $defaultSettings[$parameter] : null;
+
+        $prompt = $label;
+        if ($description) {
+            $prompt .= ' (' . $description;
+            if ($default) {
+                $prompt .= ', default ' . $default;
+            }
+            $prompt .= ')';
+        } elseif ($default) {
+            $prompt .= ' (default ' . $default . ')';
+        }
+        $prompt .= ': ';
+
+        $this->parameters[$parameter] = $this->getDialogHelper()->ask($this->output, $prompt, $default);
+    }
+
+    protected function getDefaultSettingsFromFile()
+    {
+        $defaultSettings = array();
+        $defaultsFile = $this->input->getArgument('defaults-file');
+
+        if (file_exists($defaultsFile)) {
+            $this->output->writeln('<info>Reading defaults from ' . $defaultsFile . '</info>');
+
+            $lines = array_map('trim', file($defaultsFile));
+            for ($no = 0; isset($lines[$no]); $no++) {
+                $line = $lines[$no];
+                if (strpos($line, '=') === false) {
+                    $this->output->writeln('<comment>No = delimiter found on line ' . ($no + 1) . ' of ' . $defaultsFile . ': ' . $line . '</comment>');
+                    continue;
+                }
+                list($key, $value) = array_map('trim', explode('=', $line, 2));
+                $defaultSettings[$key] = $value;
+            }
+        }
+
+        return $defaultSettings;
+    }
+
+    protected function createDirectories()
     {
         $dirs = array(
             '',
@@ -107,23 +214,23 @@ class ScaffoldCommand extends Command
             '/' . $this->parameters['plugin_test_dir'],
         );
 
-        $repo = $this->parameters['github_repo'];
+        $repo = $this->parameters['repo_name'];
         foreach ($dirs as $dir) {
             $dir = $repo . $dir;
             if (!file_exists($dir)) {
                 if (mkdir($dir, 0777, true)) {
-                    $output->writeln('<info>Created plugin directory ' . $dir . '</info>');
+                    $this->output->writeln('<info>Created plugin directory ' . $dir . '</info>');
                 } else {
                     $this->error = 'Unable to create plugin directory' . $dir;
                     return false;
                 }
             } else {
-                $output->writeln('<comment>Plugin directory ' . $dir . ' already exists, skipping creation</comment>');
+                $this->output->writeln('<comment>Plugin directory ' . $dir . ' already exists, skipping creation</comment>');
             }
         }
 
         if (file_exists($repo . '/.git')) {
-            $output->writeln('<comment>Plugin directory ' . $repo . ' is already a git repository, skipping initialization</comment>');
+            $this->output->writeln('<comment>Plugin directory ' . $repo . ' is already a git repository, skipping initialization</comment>');
             return true;
         }
 
@@ -135,101 +242,89 @@ class ScaffoldCommand extends Command
             return false;
         }
         chdir('..');
-        $output->writeln('<info>Initialized git repository in plugin directory ' . $repo . '</info>');
+        $this->output->writeln('<info>Initialized git repository in plugin directory ' . $repo . '</info>');
         return true;
     }
 
-    protected function generatePluginFile(OutputInterface $output)
+    protected function generatePluginFile()
     {
         return $this->generateFile(
             'Plugin.php.twig',
             'src/Plugin.php',
-            'plugin',
-            $output
+            'plugin'
         );
     }
 
-    protected function generateTestFile(OutputInterface $output)
+    protected function generateTestFile()
     {
         return $this->generateFile(
             'PluginTest.php.twig',
             $this->parameters['plugin_test_dir'] . '/PluginTest.php',
-            'test',
-            $output
+            'test'
         );
     }
 
-    protected function generatePHPUnitFile(OutputInterface $output)
+    protected function generatePHPUnitFile()
     {
         return $this->generateFile(
             'phpunit.xml.twig',
             'tests/phpunit.xml',
-            'PHPUnit',
-            $output
+            'PHPUnit'
         );
     }
 
-    protected function generateTravisFile(OutputInterface $output)
+    protected function generateTravisFile()
     {
         return $this->generateFile(
             '.travis.yml.twig',
             '.travis.yml',
-            'Travis CI',
-            $output
+            'Travis CI'
         );
     }
 
-    protected function generateLicenseFile(OutputInterface $output)
+    protected function generateLicenseFile()
     {
         return $this->generateFile(
             'LICENSE.twig',
             'LICENSE',
-            'license',
-            $output
+            'license'
         );
     }
 
-    protected function generateReadmeFile(OutputInterface $output)
+    protected function generateReadmeFile()
     {
         return $this->generateFile(
             'README.md.twig',
             'README.md',
-            'README',
-            $output
+            'README'
         );
     }
 
-    protected function generateComposerFile(OutputInterface $output)
+    protected function generateComposerFile()
     {
         return $this->generateFile(
             'composer.json.twig',
             'composer.json',
-            'composer',
-            $output
+            'composer'
         );
     }
 
-    protected function generateGitIgnoreFile(OutputInterface $output)
+    protected function generateGitIgnoreFile()
     {
         return $this->generateFile(
             '.gitignore.twig',
             '.gitignore',
-            '.gitignore',
-            $output
+            '.gitignore'
         );
     }
 
-    protected function runComposerInstall(OutputInterface $output)
+    protected function runComposerInstall()
     {
-        $repo = $this->parameters['github_repo'];
-        if (file_exists($repo . '/vendor')) {
-            $output->writeln('<comment>Plugin directory ' . $repo . ' already contains composer vendor directory, skipping dependency installation');
-        }
-
-        $output->writeln('<info>Installing composer dependencies in plugin directory ' . $repo . '</info>');
+        $repo = $this->parameters['repo_name'];
+        $this->output->writeln('<info>Installing composer dependencies in plugin directory ' . $repo . '</info>');
         chdir($repo);
         $install = new Process(
-            'php ' . $this->parameters['composer'] . ' install -o',
+            $this->parameters['composer_command'] . ' install -o',
             null,
             null,
             null,
@@ -244,13 +339,24 @@ class ScaffoldCommand extends Command
             return false;
         }
         chdir('..');
-        $output->writeln('<info>Done</info>');
+        $this->output->writeln('<info>Done</info>');
         return true;
     }
 
     protected function configure()
     {
-        $this->setName('scaffold');
+        $homePath = stripos(PHP_OS, 'win') !== false
+            ? $_SERVER['HOMEDRIVE'] . $_SERVER['HOME_PATH']
+            : getenv('HOME');
+
+        $this
+            ->setName('scaffold')
+            ->addArgument(
+                'defaults-file',
+                InputArgument::OPTIONAL,
+                'path to a file containing default argument values to use',
+                $homePath . DIRECTORY_SEPARATOR . '.phergie-scaffold'
+            );
     }
 
     /**
@@ -273,11 +379,11 @@ class ScaffoldCommand extends Command
      * @param string $description Description of the file being generated
      * @param OutputInterface $output
      */
-    protected function generateFile($template, $path, $description, OutputInterface $output)
+    protected function generateFile($template, $path, $description)
     {
-        $path = $this->parameters['github_repo'] . '/' . $path;
+        $path = $this->parameters['repo_name'] . '/' . $path;
         if (file_exists($path)) {
-            $output->writeln('<comment>Found existing ' . $description . ' file at ' . $path . ', not overwriting</comment>');
+            $this->output->writeln('<comment>Found existing ' . $description . ' file at ' . $path . ', not overwriting</comment>');
             return true;
         }
 
@@ -289,7 +395,7 @@ class ScaffoldCommand extends Command
             return false;
         }
 
-        $output->writeln('<info>Created ' . $description . ' file ' . $path . '</info>');
+        $this->output->writeln('<info>Created ' . $description . ' file ' . $path . '</info>');
         return true;
     }
 }

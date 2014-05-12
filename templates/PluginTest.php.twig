@@ -1,24 +1,24 @@
 <?php
 /**
- * Phergie (http://phergie.org)
+ * Phergie plugin for {{purpose}} ({{plugin_url}})
  *
- * @link {{github_url}} for the canonical source repository
- * @copyright Copyright (c) 2008-{{ "now"|date("Y") }} Phergie Development Team (http://phergie.org)
- * @license http://phergie.org/license New BSD License
- * @package {{namespace}}
+ * @link {{repo_url}} for the canonical source repository
+ * @copyright Copyright (c) {{copyright_years}} {{author_name}} ({{author_url}})
+ * @license {{license_url}} {{license_name}}
+ * @package {{package_namespace}}
  */
 
-namespace {{namespace}};
+namespace {{package_namespace}};
 
 use Phake;
-use {{event_class_full}};
-use Phergie\Irc\Bot\React\EventQueueInterface;
+use {{event_class_full}} as Event;
+use Phergie\Irc\Bot\React\EventQueueInterface as Queue;
 
 /**
  * Tests for the Plugin class.
  *
- * @category Phergie
- * @package {{namespace}}
+ * @category {{vendor_namespace}}
+ * @package {{package_namespace}}
  */
 class PluginTest extends \PHPUnit_Framework_TestCase
 {
