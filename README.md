@@ -77,7 +77,6 @@ for which values may be specified in this file:
 | license_value | [Composer value of the license](https://getcomposer.org/doc/04-schema.md#license) for the plugin | `BSD-2-Clause` |
 | standard_event_class | Event class or interface used for non-command events | `Phergie\\Irc\\Event\\EventInterface` |
 | standard_handler_method | Name of the handler method stub in the plugin class for non-command events | `handleEvent` |
-```
 
 Here's an example configuration file:
 
