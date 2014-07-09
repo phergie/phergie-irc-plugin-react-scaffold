@@ -8,11 +8,12 @@
  * @package {{package_namespace}}
  */
 
-namespace {{package_namespace}};
+namespace {{package_tests_namespace}};
 
 use Phake;
-use {{event_class_full}} as Event;
 use Phergie\Irc\Bot\React\EventQueueInterface as Queue;
+use {{event_class_full}} as Event;
+use {{package_namespace}}\Plugin;
 
 /**
  * Tests for the Plugin class.

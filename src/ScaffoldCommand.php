@@ -74,6 +74,7 @@ class ScaffoldCommand extends Command
         $this->defaultSettings = array(
             'base_composer_name' => 'phergie/phergie-irc-plugin-react-',
             'base_namespace' => 'Phergie\\Irc\\Plugin\\React\\',
+            'base_tests_namespace' => 'Phergie\\Irc\\Tests\\Plugin\\React\\',
             'standard_event_class' => 'Phergie\\Irc\\Event\\EventInterface',
             'command_event_class' => 'Phergie\\Irc\\Plugin\\React\\Command\\CommandEvent',
             'standard_handler_method' => 'handleEvent',
@@ -143,9 +144,12 @@ class ScaffoldCommand extends Command
         $this->askForSetting($defaultSettings, 'package_namespace', 'PHP namespace');
         $packageNamespace = $this->parameters['package_namespace'];
         $this->parameters['vendor_namespace'] = substr($packageNamespace, 0, strpos($packageNamespace, '\\'));
-        $this->parameters['plugin_test_dir'] = 'tests/' . str_replace('\\', DIRECTORY_SEPARATOR, $packageNamespace);
-        $this->parameters['testsuite_dir'] = './' . substr($packageNamespace, 0, strpos($packageNamespace, '\\')) . '/';
         $this->parameters['composer_namespace'] = addslashes($packageNamespace);
+
+        $defaultSettings['package_tests_namespace'] = $defaultSettings['base_tests_namespace'] . ucfirst($this->parameters['short_name']);
+        $this->askForSetting($defaultSettings, 'package_tests_namespace', 'Tests namespace');
+        $packageTestsNamespace = $this->parameters['package_tests_namespace'];
+        $this->parameters['composer_tests_namespace'] = addslashes($packageTestsNamespace);
 
         $default = $defaultSettings['command_plugin'];
         $this->parameters['command_plugin'] = $command = $this->getDialogHelper()->askConfirmation($this->output,
@@ -211,7 +215,7 @@ class ScaffoldCommand extends Command
         $dirs = array(
             '',
             '/src',
-            '/' . $this->parameters['plugin_test_dir'],
+            '/tests',
         );
 
         $repo = $this->parameters['repo_name'];
@@ -259,7 +263,7 @@ class ScaffoldCommand extends Command
     {
         return $this->generateFile(
             'PluginTest.php.twig',
-            $this->parameters['plugin_test_dir'] . '/PluginTest.php',
+            'tests/PluginTest.php',
             'test'
         );
     }
@@ -268,7 +272,7 @@ class ScaffoldCommand extends Command
     {
         return $this->generateFile(
             'phpunit.xml.twig',
-            'tests/phpunit.xml',
+            'phpunit.xml',
             'PHPUnit'
         );
     }
