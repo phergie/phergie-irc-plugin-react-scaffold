@@ -1,7 +1,8 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
     "hash": "62e144668d341b598367941a98061208",
     "packages": [
@@ -12,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "ce0fad2e725d198bd94b33affb7fa1fef085b15f"
+                "reference": "a14ed929c880e1c9d7bbaa5f77cdc07da3cc04a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/ce0fad2e725d198bd94b33affb7fa1fef085b15f",
-                "reference": "ce0fad2e725d198bd94b33affb7fa1fef085b15f",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/a14ed929c880e1c9d7bbaa5f77cdc07da3cc04a6",
+                "reference": "a14ed929c880e1c9d7bbaa5f77cdc07da3cc04a6",
                 "shasum": ""
             },
             "require": {
@@ -58,7 +59,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2014-04-16 10:34:42"
+            "time": "2014-07-08 11:46:35"
         },
         {
             "name": "symfony/process",
@@ -67,12 +68,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "767454b343816f124e8b80c8c5d0d66094864fd1"
+                "reference": "6a0e0a6b6d2b340f53bd2bb04125624c9d21f629"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/767454b343816f124e8b80c8c5d0d66094864fd1",
-                "reference": "767454b343816f124e8b80c8c5d0d66094864fd1",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/6a0e0a6b6d2b340f53bd2bb04125624c9d21f629",
+                "reference": "6a0e0a6b6d2b340f53bd2bb04125624c9d21f629",
                 "shasum": ""
             },
             "require": {
@@ -107,7 +108,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2014-04-18 20:37:09"
+            "time": "2014-07-08 11:46:35"
         },
         {
             "name": "twig/twig",
@@ -115,12 +116,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "af6910e1a73eca5ed0adaaa26adfb6c3f92e7eb7"
+                "reference": "11ea5976e38413a7a65cd2e0e2b1da9d969af513"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/af6910e1a73eca5ed0adaaa26adfb6c3f92e7eb7",
-                "reference": "af6910e1a73eca5ed0adaaa26adfb6c3f92e7eb7",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/11ea5976e38413a7a65cd2e0e2b1da9d969af513",
+                "reference": "11ea5976e38413a7a65cd2e0e2b1da9d969af513",
                 "shasum": ""
             },
             "require": {
@@ -129,7 +130,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.15-dev"
+                    "dev-master": "1.16-dev"
                 }
             },
             "autoload": {
@@ -164,7 +165,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-04-15 20:49:49"
+            "time": "2014-07-07 12:54:10"
         }
     ],
     "packages-dev": [
