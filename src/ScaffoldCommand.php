@@ -349,7 +349,7 @@ class ScaffoldCommand extends Command
 
     protected function configure()
     {
-        $homePath = stripos(PHP_OS, 'win') !== false
+        $homePath = (stripos(PHP_OS, 'win') !== false && stripos(PHP_OS, 'darwin') === false)
             ? $_SERVER['HOMEDRIVE'] . $_SERVER['HOME_PATH']
             : getenv('HOME');
 
