@@ -136,7 +136,9 @@ class ScaffoldCommand extends Command
 
         $defaultSettings['repo_url'] = $defaultSettings['base_repo_url'] . $this->parameters['composer_name'];
         $this->askForSetting($defaultSettings, 'repo_url', 'Repo URL');
-        $this->parameters['repo_name'] = substr(strrchr($this->parameters['repo_url'], '/'), 1);
+        $repoParts = explode('/', $this->parameters['repo_url']);
+        $this->parameters['repo_name'] = array_pop($repoParts);
+        $this->parameters['repo_owner'] = array_pop($repoParts);
 
         $this->askForSetting($defaultSettings, 'issues_url', 'Issues URL');
 
