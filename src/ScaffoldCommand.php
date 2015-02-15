@@ -3,7 +3,7 @@
  * Phergie (http://phergie.org)
  *
  * @link https://github.com/phergie/phergie-irc-plugin-react-scaffold for the canonical source repository
- * @copyright Copyright (c) 2008-2014 Phergie Development Team (http://phergie.org)
+ * @copyright Copyright (c) 2008-2015 Phergie Development Team (http://phergie.org)
  * @license http://phergie.org/license New BSD License
  * @package Phergie\Irc\Plugin\React\Scaffold
  */
