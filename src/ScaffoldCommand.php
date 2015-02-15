@@ -140,6 +140,7 @@ class ScaffoldCommand extends Command
         $this->parameters['repo_name'] = array_pop($repoParts);
         $this->parameters['repo_owner'] = array_pop($repoParts);
 
+        $defaultSettings['issues_url'] = $defaultSettings['repo_url'] . '/issues';
         $this->askForSetting($defaultSettings, 'issues_url', 'Issues URL');
 
         $defaultSettings['package_namespace'] = $defaultSettings['base_namespace'] . ucfirst($this->parameters['short_name']);
