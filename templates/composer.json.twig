@@ -3,6 +3,14 @@
     "description": "Phergie plugin for {{purpose}}",
     "keywords": [ "phergie", "irc", "bot", "plugin" ],
     "license": "{{license_value}}",
+    "authors": [
+        {
+            "name": "{{author_name}}",
+            "email": "{{author_email}}",
+            "homepage": "{{author_url}}",
+            "role": "Developer"
+        }
+    ],
     "support": {
         "email": "{{author_email}}",
         "irc": "irc://irc.freenode.net/phergie",
@@ -33,6 +41,11 @@
     "autoload-dev": {
         "psr-4": {
             "{{composer_tests_namespace}}\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
         }
     }
 }
