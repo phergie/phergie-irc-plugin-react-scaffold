@@ -23,7 +23,7 @@ Author URL (default http://phergie.org):
 License name (default New BSD License):
 License URL (default http://phergie.org/license):
 Composer license value (default BSD-2-Clause):
-Copyright years (default 2014): 2008-2014
+Copyright years (default 2015): 2008-2015
 composer.json name attribute (default phergie/phergie-irc-plugin-react-test):
 Repo URL (default https://github.com/phergie/phergie-irc-plugin-react-test):
 Issues URL: https://github.com/phergie/phergie-irc-plugin-react-test/issues
@@ -84,7 +84,7 @@ Here's an example configuration file:
 author_email=me@matthewturland.com
 author_name=Matthew Turland
 author_url=http://matthewturland.com
-copyright_years=2008-2014
+copyright_years=2008-2015
 license_name=MIT License
 license_url=http://opensource.org/licenses/MIT
 license_value=MIT
