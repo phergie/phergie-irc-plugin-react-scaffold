@@ -22,11 +22,16 @@ See Phergie documentation for more information on
 ## Configuration
 
 ```php
-new \{{package_namespace}}\Plugin(array(
+return [
+    'plugins' => [
+        // configuration
+        new \{{package_namespace}}\Plugin([
 
 
 
-))
+        ])
+    ]
+];
 ```
 
 ## Tests
