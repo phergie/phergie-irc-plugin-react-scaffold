@@ -36,7 +36,7 @@ class ScaffoldCommand extends Command
      *
      * @var array
      */
-    protected $parameters = array();
+    protected $parameters = [];
 
     /**
      * Path to directory containing template files
@@ -71,7 +71,7 @@ class ScaffoldCommand extends Command
     {
         parent::__construct();
         $this->templatePath = __DIR__ . '/../templates';
-        $this->defaultSettings = array(
+        $this->defaultSettings = [
             'base_composer_name' => 'phergie/phergie-irc-plugin-react-',
             'base_namespace' => 'Phergie\\Irc\\Plugin\\React\\',
             'base_tests_namespace' => 'Phergie\\Irc\\Tests\\Plugin\\React\\',
@@ -89,7 +89,7 @@ class ScaffoldCommand extends Command
             'license_name' => 'New BSD License',
             'license_url' => 'http://phergie.org/license',
             'license_value' => 'BSD-2-Clause',
-        );
+        ];
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -192,7 +192,7 @@ class ScaffoldCommand extends Command
 
     protected function getDefaultSettingsFromFile()
     {
-        $defaultSettings = array();
+        $defaultSettings = [];
         $defaultsFile = $this->input->getArgument('defaults-file');
 
         if (file_exists($defaultsFile)) {
@@ -215,11 +215,11 @@ class ScaffoldCommand extends Command
 
     protected function createDirectories()
     {
-        $dirs = array(
+        $dirs = [
             '',
             '/src',
             '/tests',
-        );
+        ];
 
         $repo = $this->parameters['repo_name'];
         foreach ($dirs as $dir) {
@@ -374,7 +374,7 @@ class ScaffoldCommand extends Command
     protected function getTwig()
     {
         $loader = new \Twig_Loader_Filesystem($this->templatePath);
-        $twig = new \Twig_Environment($loader, array('autoescape' => false));
+        $twig = new \Twig_Environment($loader, ['autoescape' => false]);
         return $twig;
     }
 
@@ -385,6 +385,7 @@ class ScaffoldCommand extends Command
      * @param string $path File path to receive the generated result
      * @param string $description Description of the file being generated
      * @param OutputInterface $output
+     * @return boolean
      */
     protected function generateFile($template, $path, $description)
     {

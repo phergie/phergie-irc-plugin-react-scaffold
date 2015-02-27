@@ -13,11 +13,11 @@ if (!isset($argv)) {
     trigger_error('Please enable register_argc_argv in your PHP configuration', E_USER_ERROR);
 }
 
-set_include_path(implode(PATH_SEPARATOR, array(
+set_include_path(implode(PATH_SEPARATOR, [
     get_include_path(),
     __DIR__ . '/../vendor', // for bin/ when invoked from git repo clone
     __DIR__ . '/../../..',  // for vendor/bin when installed via Composer
-)));
+]));
 require 'autoload.php';
 
 use Phergie\Irc\Plugin\React\Scaffold\Application;
