@@ -20,7 +20,7 @@ Plugin URL: https://github.com/phergie/phergie-irc-plugin-react-test
 Author name (default Phergie Development Team):
 Author e-mail address (default team@phergie.org):
 Author URL (default http://phergie.org):
-License name (default New BSD License):
+License name (default Simplified BSD License):
 License URL (default http://phergie.org/license):
 Composer license value (default BSD-2-Clause):
 Copyright years (default 2015): 2008-2015
@@ -72,7 +72,7 @@ for which values may be specified in this file:
 | command_plugin | y/n flag indicating whether the plugin is a command plugin | `n` |
 | composer_command | Command used to invoke Composer | `php ~/bin/composer.phar` |
 | copyright_years | Range of copyright years for the plugin source code | String containing the current year |
-| license_name | Name of the license for the plugin | `New BSD License` |
+| license_name | Name of the license for the plugin | `Simplified BSD License` |
 | license_url | URL of the license for the plugin | `http://phergie.org/license` |
 | license_value | [Composer value of the license](https://getcomposer.org/doc/04-schema.md#license) for the plugin | `BSD-2-Clause` |
 | standard_event_class | Event class or interface used for non-command events | `Phergie\\Irc\\Event\\EventInterface` |
