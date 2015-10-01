@@ -8,17 +8,18 @@
 
 The recommended method of installation is [through composer](http://getcomposer.org).
 
-```JSON
-{
-    "require": {
-        "{{composer_name}}": "dev-master"
-    }
-}
-```
+`php composer.phar require {{composer_name}}`
 
 See Phergie documentation for more information on
 [installing and enabling plugins](https://github.com/phergie/phergie-irc-bot-react/wiki/Usage#plugins).
 
+{% if command_plugin %}
+## Provided Commands
+
+| Command    | Parameters        | Description           |
+|:----------:|-------------------|-----------------------|
+| {commmand} | [param1] [param2] | {description}         |
+{% endif %}
 ## Configuration
 
 ```php
