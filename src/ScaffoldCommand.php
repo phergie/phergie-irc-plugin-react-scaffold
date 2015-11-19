@@ -108,6 +108,7 @@ class ScaffoldCommand extends Command
             && $this->generateReadmeFile()
             && $this->generateComposerFile()
             && $this->generateGitIgnoreFile()
+            && $this->generatePhpCSFile()
             && $this->runComposerInstall())) {
             $output->writeln('<error>' . $this->error . '</error>');
         }
@@ -322,6 +323,15 @@ class ScaffoldCommand extends Command
             '.gitignore.twig',
             '.gitignore',
             '.gitignore'
+        );
+    }
+
+    protected function generatePhpCSFile()
+    {
+        return $this->generateFile(
+            '.php_cs.twig',
+            '.php_cs',
+            '.php_cs'
         );
     }
 
