@@ -109,6 +109,7 @@ class ScaffoldCommand extends Command
             && $this->generateComposerFile()
             && $this->generateGitIgnoreFile()
             && $this->generatePhpCSFile()
+            && $this->generateGitAttributesFile()
             && $this->runComposerInstall())) {
             $output->writeln('<error>' . $this->error . '</error>');
         }
@@ -332,6 +333,15 @@ class ScaffoldCommand extends Command
             '.php_cs.twig',
             '.php_cs',
             '.php_cs'
+        );
+    }
+
+    protected function generateGitAttributesFile()
+    {
+        return $this->generateFile(
+            '.gitattributes.twig',
+            '.gitattributes',
+            '.gitattributes'
         );
     }
 
