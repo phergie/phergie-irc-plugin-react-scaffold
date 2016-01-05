@@ -1,10 +1,11 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "286a341b16dc2e36aa3e21c2f847b80f",
+    "hash": "45aa7e6fbd54ca4d19883efcfa54c388",
+    "content-hash": "29af6bb2869086974badba6aa2bd6fa7",
     "packages": [
         {
             "name": "symfony/console",
@@ -112,12 +113,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "d6740f36827f88a7ecda923f71ce0bb28525a9b1"
+                "reference": "23e47c52421999a7d02e45aa07002616a8032647"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/d6740f36827f88a7ecda923f71ce0bb28525a9b1",
-                "reference": "d6740f36827f88a7ecda923f71ce0bb28525a9b1",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/23e47c52421999a7d02e45aa07002616a8032647",
+                "reference": "23e47c52421999a7d02e45aa07002616a8032647",
                 "shasum": ""
             },
             "require": {
@@ -130,7 +131,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.22-dev"
+                    "dev-master": "1.23-dev"
                 }
             },
             "autoload": {
@@ -165,7 +166,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-09-30 12:05:09"
+            "time": "2016-01-03 15:37:06"
         }
     ],
     "packages-dev": [],
@@ -175,7 +176,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.2"
+        "php": ">=5.5"
     },
     "platform-dev": []
 }
