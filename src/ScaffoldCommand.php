@@ -104,6 +104,7 @@ class ScaffoldCommand extends Command
             && $this->generateTestFile()
             && $this->generatePHPUnitFile()
             && $this->generateTravisFile()
+            && $this->generateChangesFile()
             && $this->generateLicenseFile()
             && $this->generateReadmeFile()
             && $this->generateComposerFile()
@@ -291,11 +292,29 @@ class ScaffoldCommand extends Command
         );
     }
 
+    protected function generateChangesFile()
+    {
+        return $this->generateFile(
+            'CHANGES.md.twig',
+            'CHANGES.md',
+            'changes'
+        );
+    }
+
+    protected function generateContributingFile()
+    {
+        return $this->generateFile(
+            'CONTRIBUTING.md.twig',
+            'CONTRIBUTING.md',
+            'contributing'
+        );
+    }
+
     protected function generateLicenseFile()
     {
         return $this->generateFile(
-            'LICENSE.twig',
-            'LICENSE',
+            'LICENSE.md.twig',
+            'LICENSE.md',
             'license'
         );
     }
