@@ -277,8 +277,8 @@ class ScaffoldCommand extends Command
     protected function generatePHPUnitFile()
     {
         return $this->generateFile(
-            'phpunit.xml.twig',
-            'phpunit.xml',
+            'phpunit.xml.dist.twig',
+            'phpunit.xml.dist',
             'PHPUnit'
         );
     }
