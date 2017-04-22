@@ -68,7 +68,7 @@ for which values may be specified in this file:
 | base_namespace | Base namespace to which the specified value for "Short plugin name" will be appended | `Phergie\\Irc\\Plugin\\React\\` |
 | base_repo_url | Base repo URL to which the full composer package name will be appended | `https://github.com/` |
 | command_event_class | Event class or interface used for command events | `Phergie\\Irc\\Plugin\\React\\Command\\CommandEvent` |
-| command_handler_method | Name of the handler method stub in the plugin class for command events | handleCommand` |
+| command_handler_method | Name of the handler method stub in the plugin class for command events | `handleCommand` |
 | command_plugin | y/n flag indicating whether the plugin is a command plugin | `n` |
 | composer_command | Command used to invoke Composer | `php ~/bin/composer.phar` |
 | copyright_years | Range of copyright years for the plugin source code | String containing the current year |
