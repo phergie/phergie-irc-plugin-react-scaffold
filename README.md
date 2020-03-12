@@ -1,3 +1,8 @@
+# This project is abandoned
+
+This repo is being kept for posterity and will be archived in a readonly state. 
+If you're interested it can be forked under a new Composer namespace/GitHub organization.
+
 # phergie/phergie-irc-plugin-react-scaffold
 
 Utility used to generate files for [Phergie](http://github.com/phergie/phergie-irc-bot-react/) plugins.
